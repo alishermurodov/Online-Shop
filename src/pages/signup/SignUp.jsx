@@ -45,7 +45,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="py-40 dark:text-white w-[40%]  mx-auto">
+    <div className="py-20 dark:text-white w-[40%]  mx-auto">
       <div className=" justify-center grid gap-5 dark:bg-red-500 rounded-md  p-20">
         <div className="px-2">
           <p className="text-4xl">Log in to Exclusive</p>
@@ -55,12 +55,12 @@ const SignUp = () => {
           <TextField
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            sx={{ m: 1, width: "40ch" }}
+            sx={{ m: 1, width: "320px" }}
             id="outlined-basic"
             label="Email"
             variant="outlined"
           />
-          <FormControl sx={{ m: 1, width: "40ch" }} variant="outlined">
+          <FormControl sx={{ m: 1, width: "320px" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
@@ -85,7 +85,7 @@ const SignUp = () => {
             />
           </FormControl>
         </div>
-        <div className=" flex  gap-20 px-2">
+        <div className=" flex justify-between">
           <Button
             onClick={() => Login()}
             sx={{ height: "50px", width: "140px" }}

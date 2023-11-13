@@ -5,7 +5,7 @@ import '../../App.css'
 // import Burger from './components/Burger'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import { useTranslation } from "react-i18next"
 import { IconButton } from '@mui/material';
@@ -35,19 +35,32 @@ import Catagories from '../../components/TamimCatagories/Catagories';
 import { Safi } from '../../components/Safisrc/Safi';
 import CardProduct2 from '../../components/HomeComponents/CardProduct2';
 
+import heart from "../../assets/homeImg/heart.png";
+import eyes from "../../assets/homeImg/eyes.png";
+
 // requests from redux-toolkit
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../../reducers/online-shop";
+import { VisitProduct, getProduct } from "../../reducers/online-shop";
 import { store } from '../../store/store';
+import { Link } from 'react-router-dom';
+import RatingStar from '../../components/HomeComponents/Rating';
 
 
 
 const Home = () => {
+  const [buttonBuy, setButtonBuy] = useState(false);
+  const [activeCard, setActiveCard] = useState(null);
+
+
+  const productShow = useSelector(store => store.onlineShop.productShow)
+  console.log(productShow);
+
 
   const products = useSelector((store) => store.onlineShop.Products)
-  console.log(products);
+  // console.log(products);
 
   const dispatch = useDispatch()
+
 
   useEffect(() => {
     dispatch(getProduct())
@@ -153,15 +166,72 @@ const Home = () => {
               </div>
             </div>
             <div className="sm:flex justify-between flex-wrap h-[58vh] overflow-auto px-[16px]">
-              {
+              {products?.length > 0 &&
                 products?.map((e, i) => {
                   return (
                     <div key={e?.id} className="">
-                      <CardProduct2
-                        img={"http://localhost:3000/" + products[i]?.media[0]?.src}
-                        name={e?.name}
-                        price={e?.price}
-                      />
+
+                      <div
+                        className="mx-auto w-[270px]  mb-[50px]"
+                        onMouseLeave={() => setActiveCard(null)}
+                        onMouseEnter={() => setActiveCard(i)}
+
+                      >
+                        <div
+                          className="bg-[#F5F5F5] rounded-[4px] mb-[16px] overflow-hidden h-[300px] flex flex-col "
+                          style={{ justifyContent: activeCard === i ? "space-between" : "start" }}
+                        >
+                          <div className="flex justify-end items-center">
+
+                            <div className="text-center grid">
+                              <img
+                                className="m-[12px] inline justify-self-center"
+                                src={heart}
+                                alt=""
+                              />
+                              <Link to={"visitProduct"}>
+                                <img
+                                  src={eyes}
+                                  className=" mr-[0px] inline justify-self-center"
+                                  onClick={() => {
+                                    dispatch(VisitProduct(e))
+
+                                  }}
+                                  style={{ cursor: "pointer" }}
+                                  alt=""
+                                />
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="relative">
+                            <img
+                              src={"http://localhost:3000/" + products[i]?.media[0]?.src}
+                              className="mx-auto w-[100px] h-[150px]  object-cover m-auto"
+                              // style={{ height: buttonBuy ? "83%" : "90%" }}
+                              alt=""
+                            />
+                          </div>
+                          {activeCard === i && (
+                            
+                              <button 
+                                                         
+                              className="w-[100%] h-[41px] text-[#fff] bg-black">
+                                Add To Cart
+                              </button>
+                            
+                          )}
+                        </div>
+                        <div className="">
+                          <h3 className="mb-[8px] font-[500]">{e?.name}</h3>
+                          <div className="mb-[8px] flex gap-[12px]">
+                            <p className="text-[#DB4444] font-[500]">
+                              {e?.price}
+                            </p>
+                            <p className="opacity-[0.5] line-through">$1160</p>
+                          </div>
+                          <RatingStar />
+                        </div>
+                      </div>
                     </div>
                   )
                 })
@@ -211,14 +281,68 @@ const Home = () => {
           </div>
           <div className="sm:flex justify-between flex-wrap">
             {
+              products?.length > 0 &&
               products?.map((e, i) => {
                 return (
                   <div key={e?.id} className="">
-                    <CardProduct2
-                      img={"http://localhost:3000/" + products[i]?.media[0]?.src}
-                      name={e?.name}
-                      price={e?.price}
-                    />
+
+                    <div
+                      className="mx-auto w-[270px]  mb-[50px]"
+                      onMouseLeave={() => setActiveCard(null)}
+                      onMouseEnter={() => setActiveCard(i)}
+
+                    >
+                      <div
+                        className="bg-[#F5F5F5] rounded-[4px] mb-[16px] overflow-hidden h-[300px] flex flex-col "
+                        style={{ justifyContent: activeCard === i ? "space-between" : "start" }}
+                      >
+                        <div className="flex justify-end items-center">
+
+                          <div className="text-center grid">
+                            <img
+                              className="m-[12px] inline justify-self-center"
+                              src={heart}
+                              alt=""
+                            />
+                            <Link to={"visitProduct"}>
+                              <img
+                                src={eyes}
+                                className=" mr-[0px] inline justify-self-center"
+                                onClick={() => {
+                                  dispatch(VisitProduct(e))
+
+                                }}
+                                style={{ cursor: "pointer" }}
+                                alt=""
+                              />
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="relative">
+                          <img
+                            src={"http://localhost:3000/" + products[i]?.media[0]?.src}
+                            className="mx-auto w-[100px] h-[150px]  object-cover m-auto"
+                            // style={{ height: buttonBuy ? "83%" : "90%" }}
+                            alt=""
+                          />
+                        </div>
+                        {activeCard === i && (
+                          <button className="w-[100%] h-[41px] text-[#fff] bg-black">
+                            Add To Cart
+                          </button>
+                        )}
+                      </div>
+                      <div className="">
+                        <h3 className="mb-[8px] font-[500]">{e?.name}</h3>
+                        <div className="mb-[8px] flex gap-[12px]">
+                          <p className="text-[#DB4444] font-[500]">
+                            {e?.price}
+                          </p>
+                          <p className="opacity-[0.5] line-through">$1160</p>
+                        </div>
+                        <RatingStar />
+                      </div>
+                    </div>
                   </div>
                 )
               })

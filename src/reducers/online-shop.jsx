@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { axiosRequest } from '../utils/token';
 
 const api = 'http://localhost:3000/api/products'
 console.log(api);
@@ -9,7 +10,7 @@ export const getProduct = createAsyncThunk(
     "Products/getProduct",
     async () => {
         try {
-            const { data } = await axios.get(api)
+            const { data } = await axiosRequest.get(api)
             // console.log(data);
             return data
         } catch (error) {
@@ -22,10 +23,14 @@ export const onlineShop = createSlice({
     name: 'Products',
     initialState: {
         Products: [],
-        isLoading: false
+        isLoading: false,
+        productShow: {},
     },
     reducers: {
-
+        VisitProduct: (state, action)=>{
+            state.productShow = action.payload
+            console.log(action.payload);
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(getProduct.pending, (state, action) => { })
@@ -36,6 +41,6 @@ export const onlineShop = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = onlineShop.actions
+export const { increment, decrement, incrementByAmount, VisitProduct } = onlineShop.actions
 
 export default onlineShop.reducer

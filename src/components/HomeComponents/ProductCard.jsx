@@ -7,6 +7,9 @@ import TV from "../../assets/homeImg/TV.svg";
 import chair from "../../assets/homeImg/chair.svg";
 import Rating from "./Rating";
 import RatingStar from "./Rating";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import VisitProduct from "../../pages/visitProduct/VisitProduct";
 
 
 
@@ -14,7 +17,8 @@ import RatingStar from "./Rating";
 const ProductCard = ({ img, name, price, buttonName }) => {
     const [buttonBuy, setButtonBuy] = useState(false);
 
-    
+    const dispatch = useDispatch()
+
 
     return (
         <div
@@ -37,11 +41,15 @@ const ProductCard = ({ img, name, price, buttonName }) => {
                             src={heart}
                             alt=""
                         />
-                        <img
-                            src={eyes}
-                            className=" mr-[0px] inline justify-self-center"
-                            alt=""
-                        />
+                        <Link to="visitProduct">
+                            <img
+                                onClick={() => dispatch(VisitProduct(e))}
+                                src={eyes}
+                                className=" mr-[0px] inline justify-self-center"
+                                style={{cursor: "pointer"}}
+                                alt=""
+                            />
+                        </Link>
                     </div>
                 </div>
                 <div className="relative">
@@ -53,7 +61,7 @@ const ProductCard = ({ img, name, price, buttonName }) => {
                     />
                 </div>
                 {buttonBuy ? (
-                    
+
                     <button className="w-[100%] h-[41px] text-[#fff] bg-black ">
                         {buttonName}
                     </button>

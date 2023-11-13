@@ -10,6 +10,7 @@ import Cart from "./pages/cart/Cart"
 import CheckOut from "./pages/checkout/CheckOut"
 import Account from "./pages/account/Account"
 import NotFound from "./pages/notfound/NotFound"
+import VisitProduct from "./pages/visitProduct/VisitProduct"
 
 function App() {
   const isRouter = createBrowserRouter([
@@ -32,6 +33,10 @@ function App() {
         {
           path: "signup",
           element: <SignUp />,
+        },
+        {
+          path: "visitProduct",
+          element: <VisitProduct/>,
         },
         {
             path: "/",
@@ -68,7 +73,8 @@ function App() {
                 {
                     path: "account",
                     element: <Account/>
-                }
+                },
+                
             ],
           path: "wishlist",
           element: <WishList />,
@@ -81,6 +87,7 @@ function App() {
           path: "checkout",
           element: <CheckOut />,
         },
+        
       ],
     },
     {

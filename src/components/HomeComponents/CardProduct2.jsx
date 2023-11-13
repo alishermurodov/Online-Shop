@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import heart from "../../assets/homeImg/heart.png";
 import eyes from "../../assets/homeImg/eyes.png";
 import jostic from "../../assets/homeImg/jostic.svg";
@@ -7,12 +7,19 @@ import TV from "../../assets/homeImg/TV.svg";
 import chair from "../../assets/homeImg/chair.svg";
 import Rating from "./Rating";
 import RatingStar from "./Rating";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import VisitProduct from "../../pages/visitProduct/VisitProduct";
+import { getProduct } from "../../reducers/online-shop";
 
 
 
-const CardProduct2 = ({ img, name, price }) => {
+const CardProduct2 = ({ img, name, price, e }) => {
     const [buttonBuy, setButtonBuy] = useState(false);
-
+    const productShow = useSelector(store => store.onlineShop.productShow)
+    console.log(productShow);
+    // const products = useSelector((store) => store.onlineShop.Products);
+    const dispatch = useDispatch();
 
 
     return (
@@ -36,11 +43,18 @@ const CardProduct2 = ({ img, name, price }) => {
                             src={heart}
                             alt=""
                         />
-                        <img
-                            src={eyes}
-                            className=" mr-[0px] inline justify-self-center"
-                            alt=""
-                        />
+                    <Link to={"visitProduct"}>
+                            <img
+                                src={eyes}
+                                className=" mr-[0px] inline justify-self-center"
+                                onClick={() => {
+                                    dispatch(VisitProduct(e))
+                                    
+                                }}
+                                style={{ cursor: "pointer" }}
+                                alt=""
+                            />
+                        </Link>
                     </div>
                 </div>
                 <div className="relative">
